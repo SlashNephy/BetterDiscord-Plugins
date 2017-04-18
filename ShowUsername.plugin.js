@@ -2,6 +2,33 @@
 
 var ShowUsername = function () {};
 
+function apply(element) {
+    var wrapper = $(element);
+    if (wrapper.next().hasClass("bot-tag")) {
+        return;
+    }
+
+    var nickname = wrapper.text();
+    var userids = BdApi.getUserIdByName(nickname);
+    if (! userids) {
+        return;
+    }
+    var userid = userids[0];
+
+    var data = JSON.parse(localStorage.ShowUsername) || {};
+    if (userid in data) {
+        if (! wrapper.next().hasClass("discord-username")) {
+            wrapper.parent().append("<span class=\"discord-username\"> @" + data[userid] + "</span>");
+        }
+    }
+}
+
+ShowUsername.prototype.check = function () {
+    $(".message .user-name").each(function (i, t) {
+        apply(t);
+    });
+};
+
 ShowUsername.prototype.callback = function (mutations) {
     if ($(".username").length > 1) {
         var user = $(".username").last();
@@ -18,26 +45,13 @@ ShowUsername.prototype.callback = function (mutations) {
 
         localStorage.ShowUsername = JSON.stringify(data);
     }
+};
 
-    $(".message .user-name").each(function (i, t) {
-        var wrapper = $(t);
-        if (wrapper.next().hasClass("bot-tag")) {
-            return;
-        }
-
-        var nickname = wrapper.text();
-        var userid = BdApi.getUserIdByName(nickname)[0];
-
-        var data = JSON.parse(localStorage.ShowUsername) || {};
-        if (userid in data) {
-            if (! wrapper.next().hasClass("discord-username")) {
-                wrapper.parent().append("<span class=\"discord-username\"> @" + data[userid] + "</span>");
-            }
-        }
-    });
-}
+ShowUsername.prototype.onMessage = this.check;
 
 ShowUsername.prototype.start = function () {
+    window.addEventListener("click", this.check);
+
     this.mo = new MutationObserver(this.callback);
     this.mo.observe(document, {childList: true, subtree: true});
 };
@@ -61,7 +75,7 @@ ShowUsername.prototype.getDescription = function () {
 };
 
 ShowUsername.prototype.getVersion = function () {
-    return "0.1.0";
+    return "0.1.1";
 };
 
 ShowUsername.prototype.getAuthor = function () {
