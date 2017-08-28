@@ -14,7 +14,7 @@ SpeechVCEvents.prototype.getDescription = function () {
 };
 
 SpeechVCEvents.prototype.getVersion = function () {
-    return "0.2.0";
+    return "0.2.1";
 };
 
 SpeechVCEvents.prototype.getAuthor = function () {
@@ -25,18 +25,18 @@ SpeechVCEvents.prototype.start = function () {};
 SpeechVCEvents.prototype.stop = function () {};
 
 SpeechVCEvents.prototype.observer = function(e) {
-    var added = e.addedNodes[0];
-    var removed = e.removedNodes[0];
+    const added = e.addedNodes[0];
+    const removed = e.removedNodes[0];
     
-    if (added && added.className && added.className.indexOf("listDefault-3i7eWQ") >= 0) {
+    if (added && typeof added.className === "string" && added.className.indexOf("listDefault-3i7eWQ") !== -1) {
         this.play("joined", $(added).prev().text(), $(added).text());
-    } else if (removed && removed.className && removed.className.indexOf("listDefault-3i7eWQ") >= 0) {
+    } else if (removed && typeof removed.className === "string" && removed.className.indexOf("listDefault-3i7eWQ") !== -1) {
         this.play("left", $(e.previousSibling).text(), $(removed).text());
     }
 };
 
 SpeechVCEvents.prototype.play = function (event, channel, name) {
-    var text;
+    let text;
     switch (event) {
         case "joined":
             text = `${name} が ${channel} に接続しました.`;
@@ -46,22 +46,21 @@ SpeechVCEvents.prototype.play = function (event, channel, name) {
             break;
     }
 
-    console.info(text);
     this.speak(text);
 }
 
 SpeechVCEvents.prototype.speak = function (text) {
-    var speech = new SpeechSynthesisUtterance(text);
+    const speech = new SpeechSynthesisUtterance(text);
     speech.volume = 0.7;
 	speech.rate = 1.1;
     speech.pitch = 1;
     
-    for (var voice in speechSynthesis.getVoices()) {
+    for (const voice in speechSynthesis.getVoices()) {
         if (voice.default) {
             speech.voice = voice;
             break;
         }
     }
 
-	window.speechSynthesis.speak(speech);
+    window.speechSynthesis.speak(speech);
 }
