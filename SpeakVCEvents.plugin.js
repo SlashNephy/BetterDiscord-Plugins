@@ -78,7 +78,7 @@ class SpeechVCEvents {
     
     speak(text) {
         const speech = new SpeechSynthesisUtterance(text);
-        speech.volume = 0.5;
+        speech.volume = 0.4;
         speech.rate = 1.3;
         speech.pitch = 1;
         speech.voice = this.voice;
