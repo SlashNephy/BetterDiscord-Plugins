@@ -1,0 +1,144 @@
+//META{"name":"My Custom Theme","description":"@SlashNephy's custom theme.","author":"SlashNephy","version":"1.0.0"}*//
+
+/* ユーザポップアップの幅を広くする */
+.da-userPopout{
+    width: 320px !important;
+}
+
+/* メンバー欄のロール名のヘッダーを大文字にしないようにする */
+.da-members .da-membersGroup {
+    text-transform: none;
+}
+
+/* メンバー欄のメンバーをホバー時に拡大 */
+.da-member {
+    transition: transform 0.3s;
+}
+
+.da-member:hover {
+    transform: scale(1.05);
+}
+
+/* メンバー欄のロール名のヘッダーに下線を引く */
+.da-members .da-membersGroup {
+	text-align: center;
+	overflow: visible;
+	margin-bottom: 10px;
+}
+
+.da-members .da-membersGroup::after {
+	content: "";
+	display: block;
+	height: 1px;
+	width: 100%;
+	border-bottom: 1px solid rgb(175, 166, 166);
+}
+
+/* チャンネル欄のカテゴリ名のヘッダーに下線を引く */
+.da-channels .da-cursorPointer {
+	padding-top: 28px;
+	padding-right: 8px;
+	padding-left: 18px;
+	padding: 0 0 8px 0;
+	height: auto;
+	margin: 28px 8px 4px 18px;
+	border-bottom: 1px solid rgb(175, 166, 166);
+}
+
+/* ユーザの #タグ をぼかす */
+.discriminator {
+    filter: blur(5px);
+    transition: all 0.3s;
+}
+
+.discriminator:hover {
+    filter: none;
+    color: white;
+    opacity: 1;
+}
+
+/* ユーザのメールアドレスをぼかす */
+.da-userInfoViewing .da-flexChild > div:nth-child(2) .da-viewBody.da-selectable {
+    filter: blur(5px);
+    transition: 200ms cubic-bezier(.2, .11, 0, 1);
+}
+
+.da-userInfoViewing .da-flexChild > div:nth-child(2) .da-viewBody.da-selectable:hover {
+    filter: none;
+    transition: 200ms cubic-bezier(.2, .11, 0, 1);
+}
+
+/* Alternate Speaking Notification */
+.da-avatarSpeaking, .da-avatarDefault, .da-avatarContainer {
+	border-color: transparent !important;
+	box-shadow: none !important;
+	z-index: 10;
+}
+
+.da-avatarSpeaking::before {
+	content: "";
+	position: absolute;
+	left: -5px;
+	width: 4px;
+	height: 20px;
+	background: #43b581;
+}
+
+.da-avatarSpeaking::after {
+	content: "";
+	position: absolute;
+	height: 20px;
+	left: -5px;
+	width: 100%;
+	background: linear-gradient(to right, #43b581 0%, transparent 35%);
+	opacity: 0.5;
+	z-index: -1;
+}
+
+/* Hover and popout like RadialStatus */
+.da-members .da-member .da-status {
+	transition: all 150ms ease;
+    will-change: border-color, width, background, height, padding;
+}
+
+.da-members .da-member:hover .da-status, .da-members .da-member.popout-open .da-status {
+    width:100% !important;
+    background: transparent;
+    border-radius: inherit;
+    height: 100%;
+	right: -4px !important;
+	bottom: -4px;
+	padding: 2px;
+	transition: all 150ms ease;
+	border-width: 2px;
+	margin: 0;
+}
+
+.da-members .da-member:hover .da-status.da-online, .da-members .da-member.popout-open .da-status.da-online {
+    border-color: #43b581 !important;
+}
+
+.da-members .da-member:hover .da-status.da-idle, .da-members .da-member.popout-open .da-status.da-idle {
+    border-color: #faa61a !important;
+}
+
+.da-members .da-member:hover .da-status.da-dnd, .da-members .da-member.popout-open .da-status.da-dnd {
+    border-color: #f04747 !important;
+}
+
+.da-members .da-member:hover .da-status.da-offline, .da-members .da-member.popout-open .da-status.da-offline {
+    border-color: #636b75 !important;
+}
+
+.da-members .da-member:hover .da-status.da-streaming, .da-members .da-member.popout-open .da-status.da-streaming {
+    border-color: #593695 !important;
+}
+
+.da-members .da-member.popout-open .da-status.da-typing, .da-members .da-member:hover .da-status.da-typing {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.da-members .da-member.popout-open .da-status.da-typing .da-inner, .da-members .da-member:hover .da-status.da-typing .da-inner {
+    left: 1px !important;
+    top: 1px !important;
+}
